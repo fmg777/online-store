@@ -1,0 +1,36 @@
+<!--{% block title %}-->
+    <!--{% if category %}{{ category.name }}{% else %}Products{% endif %}-->
+<!--{% endblock %}-->
+
+
+<!--{% for c in content %}-->
+    <!--<br>-->
+    <!--{{ c.name }}<br>-->
+    <!--{{ c.stock }}<br>-->
+    <!--{{ c.description }}<br>-->
+<!--{% endfor %}-->
+{% include "shop/base.html" %}
+
+<h3>Categories</h3>
+    <ul>
+        <li {% if not category %}class="selected"{% endif %}>
+            <a href="{% url 'shop:product_list' %}">All</a>
+        </li>
+        {% for c in categories %}
+            <li {% if category.slug == c.slug %}class="selected"{% endif %}>
+                <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+<h1>{% if category %}{{ category.name }}{% else %}Products{% endif %}</h1>
+        {% for b in content %}
+            <div class="item">
+                <a href="{{ b.get_absolute_url }}">
+                    <img src="{% if b.image %}{{ b.image.url }}{% else %}{% endif %}">
+                </a>
+                <!--ссылка на товар. переход на detail.html-->
+                <a href="{{ b.get_absolute_url }}">{{ b.name }}</a><br>
+                ${{ b.price }}
+            </div>
+        {% endfor %}
